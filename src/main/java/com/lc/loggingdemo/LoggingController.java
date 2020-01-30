@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoggingController {
  
     Logger logger = LoggerFactory.getLogger(LoggingController.class);
+    Logger auditlogger = LoggerFactory.getLogger("audit");
  
     @RequestMapping("/")
     public String index() {
@@ -17,7 +18,7 @@ public class LoggingController {
         logger.info("An INFO Message");
         logger.warn("A WARN Message");
         logger.error("An ERROR Message");
- 
+        auditlogger.info("Hello audit");
         return "Howdy! Check out the Logs to see the output...";
     }
 }
