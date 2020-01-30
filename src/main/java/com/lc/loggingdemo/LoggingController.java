@@ -12,13 +12,18 @@ public class LoggingController {
     Logger auditlogger = LoggerFactory.getLogger("audit");
  
     @RequestMapping("/")
-    public String index() {
+    public String index() throws Exception {
+    	try {
         logger.trace("A TRACE Message");
         logger.debug("A DEBUG Message");
         logger.info("An INFO Message");
         logger.warn("A WARN Message");
         logger.error("An ERROR Message");
         auditlogger.info("Hello audit");
+        throw new Exception("some exception");
+    	}catch(Exception e) {
+    		logger.error(e.getMessage(), e);
+    	}
         return "Howdy! Check out the Logs to see the output...";
     }
 }
