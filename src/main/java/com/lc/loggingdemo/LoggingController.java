@@ -2,6 +2,7 @@ package com.lc.loggingdemo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,8 @@ public class LoggingController {
 		// Mapped Diagnostic Context. Map key=value to log parameters from
 		// context like userid, requestUUID etc.
 		MDC.put("userid", "John Doe");
+		MDC.put("requestUUID", UUID.randomUUID().toString());
+		MDC.put("requestGroupUUID", UUID.randomUUID().toString());
 
 		try {
 			logger.trace("A TRACE Message");
@@ -31,11 +34,11 @@ public class LoggingController {
 			logger.warn("A WARN Message");
 			logger.error("An ERROR Message");
 			
-			// Audit-Log json quickly using map
+			// Audit-Log events quickly using map
 			Map<String, String> map = new HashMap<>();
-			map.put("Hello", "World");
-			map.put("from", "cloud!");
-			auditlogger.info("{}", map);
+			map.put("event", "create");
+			map.put("type", "user");
+			auditlogger.info(mapper.writeValueAsString(map));
 			
 			//Audit-Log existing object using mapper 
 			ContainerBean bean = new ContainerBean("John", "Doe", "male");
